@@ -1,34 +1,29 @@
 import { useState } from "react";
-import useSWR from "swr";
-
-const url = 'http://localhost:3000/api/make-entry'
-const reqOptions = {
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        text: entryText
-    })
-}
-
-const fetcher = (...args) => {
-    fetch(url, reqOptions)
-    .then(resp => resp.json)
-    .then 
-}
 
 export default function SubmitEntry() {
     const [entryText, entryTextSet] = useState('');
 
-    const { data, error } = useSWR();
     async function handleSubmit(evt) {
         evt.preventDefault();
 
+        const url = '/api/make-entry'
+        const reqOptions = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                text: entryText,
+            })
+        }
 
-        console.log('fetch started');
-        console.log(json)
+        const result = await fetch(url, reqOptions);
+        console.log('result:', result)
+        if (result.ok) {
+            const entry = await result.json();
+            console.log('entry', entry)
+        }
     }
 
     return (

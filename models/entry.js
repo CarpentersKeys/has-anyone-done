@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
-const entrySchema = new mongoose.Schema({
-    text: String,
-    novel: Boolean,
-}, { timestamps: true })
+    const entrySchema = new mongoose.Schema({
+        text: String,
+        novel: Boolean,
+    }, { timestamps: true })
 
-export const Entry = mongoose.model('Entry', entrySchema);
+    export const EntryModel = mongoose.model('EntryModel', entrySchema);
