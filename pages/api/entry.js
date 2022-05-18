@@ -1,4 +1,4 @@
-import EntryModel from '../../models/entry';
+import EntryModel from '../../models/EntryModel';
 import dbConnect from '../../lib/dbConnect';
 import { Temporal } from '@js-temporal/polyfill';
 
@@ -8,56 +8,60 @@ export default async function handler(req, resp) {
 
     switch (method) {
         case 'GET':
-            // try {
-                const lastEntryArr = await EntryModel.find({ isCurrent: true })
-                const now = Temporal.Now.zonedDateTime();
-                const lastEntry = lastEntryArr[0];
-                const lastDateMadeCurrent = Temporal.ZonedDateTime.from(lastEntry.dateMadeCurrent);
-                const isDayOld = lastDateMadeCurrent.until(now).days > 0;
-                // get now and the current entry's ZonedDateTime, then test they are a day apart
-                console.log('isDayOld:', isDayOld)
-
-                if (lastEntryArr.length > 0) {
-                    if (!lastEntryArr.length === 1) {
-                        // handle cases where there are more than one entry somehow
-                        const updateExtras = lastEntry.slice(1).map(e => e.isCurrent = false);
-                        const entriesSaved = await updateExtras.save();
-                        console.log('there were extra entries set to current but they were reset. ', entriesSaved)
+            const now = Temporal.Now.zonedDateTimeISO();
+            let lastEntry;
+            let lastDateMadeCurrent;
+            let isFresh;
+            let todaysEntry;
+            try {
+                lastEntry = await EntryModel.findOne({ isCurrent: true })
+                console.log('populated:', lastEntry?.populated('dateMadeCurrent'))
+                if (lastEntry) {
+                    if (lastEntry?.populated('dateMadeCurrent')) {
+                        lastDateMadeCurrent = Temporal.ZonedDateTime.from(lastEntry.dateMadeCurrent);
+                        isFresh = lastDateMadeCurrent.until(now).days < 1;
                     }
-                }
-
-                if (isDayOld || true) {
+                    console.log(isFresh);
+                    // entry still fresh, return
+                    if (lastEntry && isFresh) { return resp.json('old entry still valid'); };
+                    // entry is stale
                     lastEntry.isCurrent = false;
                     const entrySaved = await lastEntry.save();
-                    console.log('time for a new entry. updated lastEntry', entrySaved);
-                    let newEntry = await EntryModel.findOne({ isNovel: true });
-                    // just grab a random one if there's nothing new 
-                    if (!newEntry) { newEntry = await EntryModel.findOne(); };
-                    newEntry.isCurrent = true;
-                    newEntry.dateMadeCurrent = now.toString();
-                    const todaysEntry = await newEntry.save();
-                    console.log('updated todays entry. ', todaysEntry)
-                }
+                    // console.log('time for a new entry. updated lastEntry', entrySaved);
+                } else { console.log('no last entry') }
 
-                resp.status(200).json({ success: true, todaysEntry })
-            // } catch (error) {
-            //     resp.status(400).json({ success: false, error })
-            // }
+                // should enter if !isFresh || !lastEntry
+                let newEntry = await EntryModel.findOne({ isNovel: true });
+                // just grab a random one if there's nothing new 
+                if (!newEntry) {
+                    console.log('no novel entries on db')
+                    newEntry = await EntryModel.findOne();
+                };
+                newEntry.isCurrent = true;
+                newEntry.isNovel = false;
+                console.log('now.toString():', now.toString());
+                newEntry.dateMadeCurrent = now.toString();
+                console.log('newEntry:', newEntry);
+                todaysEntry = await newEntry.save();
+                // console.log('updated todays entry. ', todaysEntry)
+
+                return resp.status(200).json({ success: true, todaysEntry })
+            } catch (error) {
+                console.log('GET error: ', error)
+                return resp.status(400).json({ success: false, error })
+            }
             break
         case 'POST':
             try {
-                const text = req.body.text;
-                EntryModel.create({
+                const { text } = body;
+                const newEntry = await EntryModel.create({
                     text,
                     isNovel: true,
                     isCurrent: false,
                 })
-                    .then(() => {
-                        resp.send(JSON.stringify('success'));
-                    })
-                    .catch(err => console.log('error while submitting entry:', err))
+                return resp.send(JSON.stringify('successfully created new entry: ', newEntry));
             } catch (error) {
-                resp.status(400).json({ success: false })
+                return resp.status(400).json({ success: false })
             }
             break
     }

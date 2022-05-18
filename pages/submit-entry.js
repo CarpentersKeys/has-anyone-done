@@ -38,6 +38,7 @@ export default function SubmitEntry() {
                     onChange={(evt) => { entryTextSet(evt.target.value) }}
                     value={entryText}
                 />
+                {/* FUTURE: auto search the db and display similar options as input to avoid dups */}
             </form>
         </div >
     )

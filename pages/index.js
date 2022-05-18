@@ -5,7 +5,7 @@ import styles from '../styles/Home.module.css'
 export async function getStaticProps() {
 
   const urlResp = await fetch('http://localhost:3000/api/entry');
-  console.log('fetch url resp', urlResp);
+  // console.log('fetch url resp', urlResp);
   const todaysEntry = await urlResp.json();
 
   return {
