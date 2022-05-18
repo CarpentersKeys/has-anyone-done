@@ -6,7 +6,7 @@ export default function SubmitEntry() {
     async function handleSubmit(evt) {
         evt.preventDefault();
 
-        const url = '/api/make-entry'
+        const url = '/api/entry'
         const reqOptions = {
             method: 'POST',
             headers: {

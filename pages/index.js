@@ -4,18 +4,20 @@ import styles from '../styles/Home.module.css'
 
 export async function getStaticProps() {
 
-  const urlResp = await fetch('http://localhost:3000/api/todays-entry');
+  const urlResp = await fetch('http://localhost:3000/api/entry');
+  console.log('fetch url resp', urlResp);
   const todaysEntry = await urlResp.json();
 
   return {
     props: {
       todaysEntry,
     },
-    revalidate: 60 * 60 * 24,
+    revalidate: 1, //60 * 60 * 24,
   }
 }
 
 export default function Home({ todaysEntry }) {
+  console.log('todaysEntry celintside: ', todaysEntry);
 
   return (
     <div className={styles.container}>
