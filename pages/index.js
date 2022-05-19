@@ -33,7 +33,7 @@ export default function Home({ todaysEntry }) {
         </h1>
 
         <p className={styles.description}>
-          {todaysEntry.text}
+          {todaysEntry.newEntry.text}
         </p>
 
       </main>

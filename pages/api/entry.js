@@ -12,7 +12,7 @@ export default async function handler(req, resp) {
             let lastEntry;
             let lastDateMadeCurrent;
             let isFresh;
-            let todaysEntry;
+            let newEntry
             try {
                 lastEntry = await EntryModel.findOne({ isCurrent: true })
                 console.log('populated:', lastEntry?.populated('dateMadeCurrent'))
@@ -21,7 +21,6 @@ export default async function handler(req, resp) {
                         lastDateMadeCurrent = Temporal.ZonedDateTime.from(lastEntry.dateMadeCurrent);
                         isFresh = lastDateMadeCurrent.until(now).days < 1;
                     }
-                    console.log(isFresh);
                     // entry still fresh, return
                     if (lastEntry && isFresh) { return resp.json('old entry still valid'); };
                     // entry is stale
@@ -31,21 +30,20 @@ export default async function handler(req, resp) {
                 } else { console.log('no last entry') }
 
                 // should enter if !isFresh || !lastEntry
-                let newEntry = await EntryModel.findOne({ isNovel: true });
-                // just grab a random one if there's nothing new 
+                newEntry = await EntryModel.findOne({ isNovel: true });
                 if (!newEntry) {
-                    console.log('no novel entries on db')
-                    newEntry = await EntryModel.findOne();
-                };
-                newEntry.isCurrent = true;
-                newEntry.isNovel = false;
-                console.log('now.toString():', now.toString());
-                newEntry.dateMadeCurrent = now.toString();
-                console.log('newEntry:', newEntry);
-                todaysEntry = await newEntry.save();
-                // console.log('updated todays entry. ', todaysEntry)
+                    const oldEntries = await EntryModel.find({}).sort({updatedAt: 1});
+                    console.log('old entries', oldEntries)
+                    newEntry = oldEntries[0];
+                }
+                // just grab a random one if there's nothing new 
+                const updated = await newEntry.updateOne({
+                    isCurrent: true,
+                    isNovel: false,
+                    dateMadeCurrent: now.toString(),
+                });
 
-                return resp.status(200).json({ success: true, todaysEntry })
+                return resp.status(200).json({ success: true, newEntry })
             } catch (error) {
                 console.log('GET error: ', error)
                 return resp.status(400).json({ success: false, error })
