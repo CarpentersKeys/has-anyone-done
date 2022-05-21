@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSession, signIn, signOut } from 'next-auth/react';
+import styles from '../styles/Submit-Entry.module.css';
+import TimedMessage from "../Components/TimedMessage";
 
 export default function SubmitEntry() {
     const [entryText, entryTextSet] = useState('');
@@ -30,12 +32,12 @@ export default function SubmitEntry() {
 
     if (session) {
         return (
-            <div>
-                <form onSubmit={handleSubmit}>
+            <div className={styles.container}>
+                <form className={styles.form} onSubmit={handleSubmit}>
                     <button
                         type='submit'
-                        value='has Anyone Done..'
-                    />
+                    >has Anyone Done..
+                    </button>
                     <input
                         type="text"
                         onChange={(evt) => { entryTextSet(evt.target.value) }}
@@ -43,18 +45,24 @@ export default function SubmitEntry() {
                     />
                     {/* FUTURE: auto search the db and display similar options as input to avoid dups */}
                 </form>
-                <button onClick={() => signOut()}>Sign Out</button>
+                <div className={styles.auth}>
+                    <button onClick={() => signOut()}>Sign Out</button>
+                </div>
             </div >
         )
     } else {
         return (
-            <div>
-                <h3>
-                    Not signed in
-                </h3>
-                <p>btw only I can sign in</p>
-                <button onClick={() => signIn()}>Sign In</button>
-            </div>
+            <TimedMessage jsx={
+                <div className={styles.container}>
+                    <h3 className={styles.message}>
+                        Not signed in
+                    </h3>
+                    <p className={styles.message}>btw only I can sign in</p>
+                    <div className={styles.auth}>
+                        <button onClick={() => signIn()}>Sign In</button>
+                    </div>
+                </div>
+            } time='800' />
         )
     }
 }
