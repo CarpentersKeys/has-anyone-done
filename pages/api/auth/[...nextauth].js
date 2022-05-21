@@ -11,7 +11,6 @@ export default NextAuth({
     ],
     callbacks: {
         async signIn({ user, account }) {
-            console.log('signIn callback, user:', user);
             if (user.email === 'carpenterskeys@gmail.com') {
                 return true;
             } else { return false; };
