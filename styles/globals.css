@@ -1,9 +1,19 @@
+:root {
+  --mainCol-dark: #0052DB;
+  --mainCol-light: #6994DB;
+  --secCol-light: #DBADC6;
+  --tertCol-light: #dbb35ec6;
+  --quadCol-light: #b0e0ae;
+  --font-grape: 'Grape Nuts', cursive;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: var(--font-grape);
+  background-color: var(--mainCol-dark);
+  color: var(--tertCol-light);
 }
 
 a {

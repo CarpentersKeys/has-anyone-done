@@ -1,0 +1,52 @@
+.container {
+    display: grid;
+    width: 100vw;
+    padding: 3rem;
+    font-size: 3rem;
+    place-content: center;
+    height: 100vh;
+}
+
+.container div,
+.container form {
+    padding: 1rem;
+    border-radius: 3rem;
+    background-color: var(--tertCol-light);
+}
+
+.container button {
+    background-color: var(--tertCol-light);
+}
+.container button:hover {
+    background-color: var(--mainCol-light);
+}
+
+.form,
+.message {
+    align-content: center;
+}
+
+.form button {
+    border-radius: 1rem 0 0 1rem;
+    font-size: inherit;
+}
+
+.form input {
+    margin-left: 0.4rem;
+    border-radius: 0 1rem 1rem 0;
+    font-size: inherit;
+}
+
+.auth {
+    font-size: 1rem;
+    position: absolute;
+    margin: 0 0;
+    padding: 0 0;
+    right: 40px;
+    top: 40px;
+}
+
+.auth button {
+    border-radius: 1rem;
+    font-size: 2rem;
+}
