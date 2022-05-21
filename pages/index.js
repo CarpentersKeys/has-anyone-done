@@ -28,13 +28,15 @@ export default function Home({ todaysEntry }) {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          has Anyone Done
-        </h1>
+        <div className={styles.mainBg}>
+          <h1 className={styles.title}>
+            has Anyone Done
+          </h1>
 
-        <p className={styles.description}>
-          {entryText}
-        </p>
+          <p className={styles.entry}>
+            {entryText}..?
+          </p>
+        </div>
 
       </main>
 
