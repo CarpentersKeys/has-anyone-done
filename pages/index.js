@@ -17,7 +17,7 @@ export async function getStaticProps() {
 }
 
 export default function Home({ todaysEntry }) {
-  console.log('todaysEntry celintside: ', todaysEntry);
+  const entryText = todaysEntry?.newEntry?.text || todaysEntry?.lastEntry?.text;
 
   return (
     <div className={styles.container}>
@@ -33,7 +33,7 @@ export default function Home({ todaysEntry }) {
         </h1>
 
         <p className={styles.description}>
-          {todaysEntry.newEntry.text}
+          {entryText}
         </p>
 
       </main>

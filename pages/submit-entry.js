@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 export default function SubmitEntry() {
     const [entryText, entryTextSet] = useState('');
+    const { data: session } = useSession();
 
     async function handleSubmit(evt) {
         evt.preventDefault();
@@ -26,20 +28,33 @@ export default function SubmitEntry() {
         }
     }
 
-    return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <button
-                    type='submit'
-                    value='has Anyone Done..'
-                />
-                <input
-                    type="text"
-                    onChange={(evt) => { entryTextSet(evt.target.value) }}
-                    value={entryText}
-                />
-                {/* FUTURE: auto search the db and display similar options as input to avoid dups */}
-            </form>
-        </div >
-    )
+    if (session) {
+        return (
+            <div>
+                <form onSubmit={handleSubmit}>
+                    <button
+                        type='submit'
+                        value='has Anyone Done..'
+                    />
+                    <input
+                        type="text"
+                        onChange={(evt) => { entryTextSet(evt.target.value) }}
+                        value={entryText}
+                    />
+                    {/* FUTURE: auto search the db and display similar options as input to avoid dups */}
+                </form>
+                <button onClick={() => signOut()}>Sign Out</button>
+            </div >
+        )
+    } else {
+        return (
+            <div>
+                <h3>
+                    Not signed in
+                </h3>
+                <p>btw only I can sign in</p>
+                <button onClick={() => signIn()}>Sign In</button>
+            </div>
+        )
+    }
 }
