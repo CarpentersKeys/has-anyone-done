@@ -1,0 +1,13 @@
+.auth {
+    font-size: 1rem;
+    position: absolute;
+    margin: 0 0;
+    padding: 0 0;
+    right: 40px;
+    top: 40px;
+}
+
+.auth button {
+    border-radius: 1rem;
+    font-size: 2rem;
+}
