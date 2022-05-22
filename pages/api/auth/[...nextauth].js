@@ -1,5 +1,10 @@
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
+// import path from 'node:path';
+
+// this doesn't work for some reason
+// const logo = path.join(process.cwd(), 'public', 'favicon'); 
+// console.log(logo)
 
 export default NextAuth({
 
@@ -15,5 +20,9 @@ export default NextAuth({
                 return true;
             } else { return false; };
         }
+    },
+    theme: {
+        brandColor: '#0052DB',
+        // logo,
     }
 })
