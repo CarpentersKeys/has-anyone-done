@@ -1,18 +1,27 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { Temporal } from '@js-temporal/polyfill';
 
 export async function getStaticProps() {
 
   const urlResp = await fetch('http://localhost:3000/api/entry');
   // console.log('fetch url resp', urlResp);
   const todaysEntry = await urlResp.json();
-
+  const entryDateMadeCurrent = todaysEntry?.newEntry?.dateMadeCurrent || todaysEntry?.lastEntry?.dateMadeCurrent;
+  const dateMadeCurrent = Temporal.ZonedDateTime.from(entryDateMadeCurrent)
+    .round({
+      roundingMode: 'floor',
+      smallestUnit: 'day',
+    })
+  console.log('datemade', dateMadeCurrent);
+  const updateDate = dateMadeCurrent.add({ days: 1, minutes: 20 })
+  const secondsFromNow = Math.ceil(Temporal.Now.zonedDateTimeISO().until(updateDate).total('seconds'));
   return {
     props: {
       todaysEntry,
     },
-    revalidate: 1, //60 * 60 * 24,
+    revalidate: secondsFromNow,
   }
 }
 

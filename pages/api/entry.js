@@ -1,6 +1,6 @@
 import EntryModel from '../../models/EntryModel';
 import dbConnect from '../../lib/dbConnect';
-import { Temporal } from '@js-temporal/polyfill';
+import { Temporal, toTemporalInstant } from '@js-temporal/polyfill';
 
 export default async function handler(req, resp) {
     await dbConnect();
@@ -8,17 +8,30 @@ export default async function handler(req, resp) {
 
     switch (method) {
         case 'GET':
-            const now = Temporal.Now.zonedDateTimeISO();
             let lastEntry;
-            let lastDateMadeCurrent;
-            let isFresh;
             let newEntry
+
+            // yesterday for testing
+            // const yesterday = Temporal.Now.zonedDateTimeISO().subtract({ days: 1, minutes: 20 })
+            const now = Temporal.Now.zonedDateTimeISO();
+            let lastDateMadeCurrent;
+            let since
+            let daysSince
+            let isFresh;
+
             try {
                 lastEntry = await EntryModel.findOne({ isCurrent: true })
                 if (lastEntry) {
                     if (lastEntry.dateMadeCurrent) {
-                        lastDateMadeCurrent = Temporal.ZonedDateTime.from(lastEntry.dateMadeCurrent);
-                        isFresh = lastDateMadeCurrent.until(now).days < 1;
+                        lastDateMadeCurrent = Temporal.ZonedDateTime
+                            .from(lastEntry.dateMadeCurrent)
+                            .round({
+                                roundingMode: 'floor',
+                                smallestUnit: 'day',
+                            });
+                        since = now.since(lastDateMadeCurrent).round({ largestUnit: 'day' })
+                        daysSince = since.days
+                        isFresh = daysSince < 1;
                     }
                     // entry still fresh, return
                     if (lastEntry && isFresh) { return resp.json({ success: true, lastEntry }); };
