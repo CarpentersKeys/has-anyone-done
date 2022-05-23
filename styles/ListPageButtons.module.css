@@ -1,0 +1,30 @@
+.listCont {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    list-style-type: none;
+    justify-content: center;
+    gap: 8px;
+}
+
+.listCont button {
+    background-color: var(--quadCol-light);
+    color: var(--mainCol-dark);
+}
+.listCont button:hover {
+    background-color: var(--mainCol-light);
+    color: var(--mainCol-dark);
+}
+
+.listCont li {
+    background-color: none;
+    flex-basis: 30px;
+    place-content: center;
+}
+
+#onlyPage {
+    margin: 0;
+    padding: 0;
+    color: var(--quadCol-light);
+    font-size: 2rem;
+}

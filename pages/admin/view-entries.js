@@ -8,9 +8,6 @@ export default function ViewEntries() {
     const { data: session } = useSession();
     const [entries, entriesSet] = useState([]);
     const [page, pageSet] = useState(0);
-    useEffect(() => {
-        console.log(page)
-    }, [page])
 
     useEffect(() => {
         const url = '/api/view'
@@ -44,7 +41,7 @@ export default function ViewEntries() {
                         )
                     }
                 </ul>
-                <ListPageButtons entries={new Array(21)} pageSet={pageSet} />
+                <ListPageButtons entries={entries} pageSet={pageSet} />
             </div >
         )
     } else {
