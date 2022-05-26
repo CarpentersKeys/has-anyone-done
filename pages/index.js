@@ -4,15 +4,11 @@ import styles from '../styles/Home.module.css'
 import { Temporal } from '@js-temporal/polyfill';
 import { useState } from 'react';
 import TimeUntil from '../Components/TimeUntil';
+import getDailyEntry from '../lib/getDailyEntry';
 
 export async function getStaticProps() {
-
-  const urlBase = process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000'
-  const fetchUrl = `${urlBase}/api/entry`
-  const urlResp = await fetch(fetchUrl);
-  // console.log('fetch url resp', urlResp);
-  const todaysEntry = await urlResp.json();
-  const entryDateMadeCurrent = todaysEntry?.newEntry?.dateMadeCurrent || todaysEntry?.lastEntry?.dateMadeCurrent;
+  const todaysEntry = await getDailyEntry();
+  const entryDateMadeCurrent = todaysEntry.dateMadeCurrent;
   const dateMadeCurrent = Temporal.ZonedDateTime.from(entryDateMadeCurrent)
     .round({
       roundingMode: 'floor',
@@ -25,7 +21,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      todaysEntry,
+      todaysEntry: JSON.stringify(todaysEntry),
       updateDate: updateDate.toString(),
     },
     revalidate: secondsFromNow,
@@ -35,7 +31,7 @@ export async function getStaticProps() {
 export default function Home({ todaysEntry, updateDate }) {
   const [hover, hoverSet] = useState(false);
 
-  const entryText = todaysEntry?.newEntry?.text || todaysEntry?.lastEntry?.text;
+  const entryText = JSON.parse(todaysEntry).text;
 
   return (
     <div className={styles.container}>
