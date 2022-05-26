@@ -10,7 +10,7 @@ export default function ViewEntries() {
     const [page, pageSet] = useState(0);
 
     useEffect(() => {
-        const urlBase = process.env.VERCEL_URL || 'http://localhost:3000'
+        const urlBase = process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000'
         const fetchUrl = `${urlBase}/api/view`
         const reqOptions = {
             method: 'GET',

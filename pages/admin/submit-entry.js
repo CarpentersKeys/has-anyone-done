@@ -13,7 +13,7 @@ export default function SubmitEntry() {
     async function handleSubmit(evt) {
         evt.preventDefault();
 
-        const urlBase = process.env.VERCEL_URL || 'http://localhost:3000'
+        const urlBase = process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000'
         const fetchUrl = `${urlBase}/api/entry`
         const reqOptions = {
             method: 'POST',

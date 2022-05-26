@@ -7,7 +7,7 @@ import TimeUntil from '../Components/TimeUntil';
 
 export async function getStaticProps() {
 
-  const urlBase = process.env.VERCEL_URL || 'http://localhost:3000'
+  const urlBase = process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000'
   const fetchUrl = `${urlBase}/api/entry`
   const urlResp = await fetch(fetchUrl);
   // console.log('fetch url resp', urlResp);
