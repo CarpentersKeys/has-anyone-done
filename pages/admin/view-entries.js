@@ -22,7 +22,9 @@ export default function ViewEntries() {
 
         fetch(fetchUrl, reqOptions)
             .then(result => result.ok && result.json() || new Error('result not ok'))
-            .then(json => entriesSet(json.entries))
+            .then(json => json?.entries?.length
+                ? entriesSet(json.entries) // happy path
+                : new Error(`no entries or fetch didnt return an array. json: ${json}`))
             .catch(err => console.log('fetch error in ViewEntries', err))
     }, [])
 

@@ -28,8 +28,8 @@ export default function SubmitEntry() {
 
         const result = await fetch(fetchUrl, reqOptions);
         if (result.ok) {
-            const entry = await result.json();
-            router.push(`${urlBase}/admin/view-entries`);
+            const urlRedir = `${urlBase}/admin/view-entries`
+            router.push(urlRedir);
         }
     }
 
