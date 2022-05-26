@@ -13,7 +13,8 @@ export default function SubmitEntry() {
     async function handleSubmit(evt) {
         evt.preventDefault();
 
-        const url = `${process.env.NEXTAUTH_URL}/api/entry`
+        const urlBase = process.env.VERCEL_URL || 'http://localhost:3000'
+        const fetchUrl = `${urlBase}/api/entry`
         const reqOptions = {
             method: 'POST',
             headers: {
@@ -25,7 +26,7 @@ export default function SubmitEntry() {
             })
         }
 
-        const result = await fetch(url, reqOptions);
+        const result = await fetch(fetchUrl, reqOptions);
         if (result.ok) {
             const entry = await result.json();
             router.push('/admin/view-entries');

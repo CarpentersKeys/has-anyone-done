@@ -10,7 +10,8 @@ export default function ViewEntries() {
     const [page, pageSet] = useState(0);
 
     useEffect(() => {
-        const url = `${process.env.NEXTAUTH_URL}/api/view`
+        const urlBase = process.env.VERCEL_URL || 'http://localhost:3000'
+        const fetchUrl = `${urlBase}/api/view`
         const reqOptions = {
             method: 'GET',
             headers: {
@@ -19,7 +20,7 @@ export default function ViewEntries() {
             }
         }
 
-        fetch(url, reqOptions)
+        fetch(fetchUrl, reqOptions)
             .then(result => result.ok && result.json() || new Error('result not ok'))
             .then(json => entriesSet(json.entries))
             .catch(err => console.log('fetch error in ViewEntries', err))
