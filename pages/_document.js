@@ -8,6 +8,7 @@ export default function Document() {
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='true' />
                 <link href="https://fonts.googleapis.com/css2?family=Grape+Nuts&display=swap" rel="stylesheet" />
                 <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>
+                <link rel="icon" href="/favicon.ico" />
             </Head>
             <body>
                 <Main />

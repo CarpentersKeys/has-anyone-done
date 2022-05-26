@@ -2,6 +2,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { Temporal } from '@js-temporal/polyfill';
+import { useState } from 'react';
+import TimeUntil from '../Components/TimeUntil';
 
 export async function getStaticProps() {
 
@@ -14,18 +16,23 @@ export async function getStaticProps() {
       roundingMode: 'floor',
       smallestUnit: 'day',
     })
-  console.log('datemade', dateMadeCurrent);
-  const updateDate = dateMadeCurrent.add({ days: 1, minutes: 20 })
+  const updateDate = dateMadeCurrent.add({ days: 1, minutes: 1 }) // 1 min buffer to make sure we've ticked over 
+
+  // run on the server so temporal should use the right timezone FUTURE: make this zoning explicit
   const secondsFromNow = Math.ceil(Temporal.Now.zonedDateTimeISO().until(updateDate).total('seconds'));
+
   return {
     props: {
       todaysEntry,
+      updateDate: updateDate.toString(),
     },
-    revalidate: secondsFromNow,
+    revalidate: secondsFromNow || 1,
   }
 }
 
-export default function Home({ todaysEntry }) {
+export default function Home({ todaysEntry, updateDate }) {
+  const [hover, hoverSet] = useState(false);
+
   const entryText = todaysEntry?.newEntry?.text || todaysEntry?.lastEntry?.text;
 
   return (
@@ -33,20 +40,35 @@ export default function Home({ todaysEntry }) {
       <Head>
         <title>Has Anyone Done?</title>
         <meta name="description" content="Just wondering" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <div className={styles.mainBg}>
-          <h1 className={styles.title}>
-            has Anyone Done
-          </h1>
+        <div
+          onMouseEnter={() => hoverSet(true)}
+          onMouseLeave={() => hoverSet(false)}
+          className={styles.mainBg}
+        >
+          <div>
+            <h1 className={styles.title}>
+              has Anyone Done
+            </h1>
 
-          <p className={styles.entry}>
-            {entryText}..?
-          </p>
+            {
+              !hover &&
+              <p className={styles.entry}>
+                {entryText}..?
+              </p>
+            }
+            {
+              hover &&
+
+              <p id={styles.time}>
+                <TimeUntil dateTime={updateDate} />
+              </p>
+            }
+          </div>
+
         </div>
-
       </main>
 
       <footer className={styles.footer}>
