@@ -10,7 +10,7 @@ export default function ViewEntries() {
     const [page, pageSet] = useState(0);
 
     useEffect(() => {
-        const url = '/api/view'
+        const url = `${process.env.NEXTAUTH_URL}/api/view`
         const reqOptions = {
             method: 'GET',
             headers: {

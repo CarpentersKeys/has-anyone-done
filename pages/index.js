@@ -7,7 +7,7 @@ import TimeUntil from '../Components/TimeUntil';
 
 export async function getStaticProps() {
 
-  const urlResp = await fetch('http://localhost:3000/api/entry');
+  const urlResp = await fetch(`${process.env.NEXTAUTH_URL}/api/entry`);
   // console.log('fetch url resp', urlResp);
   const todaysEntry = await urlResp.json();
   const entryDateMadeCurrent = todaysEntry?.newEntry?.dateMadeCurrent || todaysEntry?.lastEntry?.dateMadeCurrent;

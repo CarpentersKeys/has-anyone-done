@@ -13,7 +13,7 @@ export default function SubmitEntry() {
     async function handleSubmit(evt) {
         evt.preventDefault();
 
-        const url = '/api/entry'
+        const url = `${process.env.NEXTAUTH_URL}/api/entry`
         const reqOptions = {
             method: 'POST',
             headers: {

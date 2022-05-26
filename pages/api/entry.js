@@ -1,6 +1,6 @@
 import EntryModel from '../../models/EntryModel';
 import dbConnect from '../../lib/dbConnect';
-import { Temporal, toTemporalInstant } from '@js-temporal/polyfill';
+import { Temporal } from '@js-temporal/polyfill';
 
 export default async function handler(req, resp) {
     await dbConnect();
