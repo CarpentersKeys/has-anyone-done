@@ -19,14 +19,14 @@ export async function getStaticProps() {
   const updateDate = dateMadeCurrent.add({ days: 1, minutes: 1 }) // 1 min buffer to make sure we've ticked over 
 
   // run on the server so temporal should use the right timezone FUTURE: make this zoning explicit
-  const secondsFromNow = Math.ceil(Temporal.Now.zonedDateTimeISO().until(updateDate).total('seconds'));
+  const secondsFromNow = Math.max(Math.ceil(Temporal.Now.zonedDateTimeISO().until(updateDate).total('seconds')), 1);
 
   return {
     props: {
       todaysEntry,
       updateDate: updateDate.toString(),
     },
-    revalidate: secondsFromNow || 1,
+    revalidate: secondsFromNow,
   }
 }
 
