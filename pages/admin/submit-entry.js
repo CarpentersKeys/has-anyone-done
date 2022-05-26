@@ -29,7 +29,7 @@ export default function SubmitEntry() {
         const result = await fetch(fetchUrl, reqOptions);
         if (result.ok) {
             const entry = await result.json();
-            router.push('/admin/view-entries');
+            router.push(`${urlBase}/admin/view-entries`);
         }
     }
 
