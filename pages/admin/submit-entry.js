@@ -13,8 +13,9 @@ export default function SubmitEntry() {
     async function handleSubmit(evt) {
         evt.preventDefault();
 
-        const fetchUrl = `${process.env.HOST_URL}/api/entry`
-        console.log('fetchurl',fetchUrl)
+        const urlBase = process.env.NEXT_PUBLIC_HOST_URL;
+        const fetchUrl = `${urlBase}/api/entry`
+        console.log('fetchurl', fetchUrl)
         const reqOptions = {
             method: 'POST',
             headers: {
@@ -28,8 +29,7 @@ export default function SubmitEntry() {
 
         const result = await fetch(fetchUrl, reqOptions);
         if (result.ok) {
-            const urlRedir = `${urlBase}/admin/view-entries`
-            router.push(urlRedir);
+            router.push('/admin/view-entries');
         }
     }
 

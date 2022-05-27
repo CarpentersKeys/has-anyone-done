@@ -6,8 +6,6 @@ import GithubProvider from 'next-auth/providers/github';
 // const logo = path.join(process.cwd(), 'public', 'favicon'); 
 // console.log(logo)
 
-console.log('NEXT_PUBLIC_HOST_URL',process.env.NEXT_PUBLIC_HOST_URL)
-
 export default NextAuth({
 
     providers: [
@@ -18,8 +16,6 @@ export default NextAuth({
     ],
     callbacks: {
         async signIn({ user, account }) {
-            console.log('user.email',user.email );
-            console.log('MY_EMAIL', process.env.MY_EMAIL);
             if (user.email === process.env.MY_EMAIL) {
                 return true;
             } else { return false; };

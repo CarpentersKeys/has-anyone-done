@@ -10,7 +10,7 @@ export default function ViewEntries() {
     const [page, pageSet] = useState(0);
 
     useEffect(() => {
-        const urlBase = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_VERCEL_URL : process.env.LOCAL_URL;
+        const urlBase = process.env.NEXT_PUBLIC_HOST_URL;
         const fetchUrl = `${urlBase}/api/view`
         const reqOptions = {
             method: 'GET',
