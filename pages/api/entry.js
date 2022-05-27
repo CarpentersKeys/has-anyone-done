@@ -2,7 +2,8 @@ import EntryModel from '../../models/EntryModel';
 import dbConnect from '../../lib/dbConnect';
 
 export default async function handler(req, resp) {
-    await dbConnect();
+    const db = await dbConnect();
+    console.log(db)
     const { method, body } = req;
 
     if (method !== 'POST') {

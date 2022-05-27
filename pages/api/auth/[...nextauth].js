@@ -6,21 +6,17 @@ import GithubProvider from 'next-auth/providers/github';
 // const logo = path.join(process.cwd(), 'public', 'favicon'); 
 // console.log(logo)
 
-const clientId = process.env.NODE_ENV === 'production' ? process.env.GITHUB_ID : process.env.DEV_GITHUB_ID;
-const clientSecret = process.env.NODE_ENV === 'production' ? process.env.GITHUB_SECRET : process.env.DEV_GITHUB_SECRET;
-
 export default NextAuth({
 
     providers: [
         GithubProvider({
-            clientId,
-            clientSecret,
+            clientId: process.env.GITHUB_ID,
+            clientSecret: process.env.GITHUB_SECRET,
         }),
     ],
     callbacks: {
         async signIn({ user, account }) {
-            console.log(user.email)
-            if (user.email === 'carpenterskeys@gmail.com') {
+            if (user.email === process.env.MY_EMAIL) {
                 return true;
             } else { return false; };
         }
