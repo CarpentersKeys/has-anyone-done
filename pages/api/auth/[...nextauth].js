@@ -6,12 +6,15 @@ import GithubProvider from 'next-auth/providers/github';
 // const logo = path.join(process.cwd(), 'public', 'favicon'); 
 // console.log(logo)
 
+const clientId = process.env.NODE_ENV === 'production' ? process.env.GITHUB_ID : process.env.DEV_GITHUB_ID;
+const clientSecret = process.env.NODE_ENV === 'production' ? process.env.GITHUB_SECRET : process.env.DEV_GITHUB_SECRET;
+
 export default NextAuth({
 
     providers: [
         GithubProvider({
-            clientId: process.env.GITHUB_ID,
-            clientSecret: process.env.GITHUB_SECRET
+            clientId,
+            clientSecret,
         }),
     ],
     callbacks: {
