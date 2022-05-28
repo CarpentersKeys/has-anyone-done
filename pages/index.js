@@ -5,7 +5,8 @@ import { Temporal } from '@js-temporal/polyfill';
 import { useState } from 'react';
 import TimeUntil from '../Components/TimeUntil';
 import getDailyEntry from '../lib/getDailyEntry';
-if (!process.env.NEXT_PUBLIC_HOST_URL) { process.env.NEXT_PUBLIC_HOST_URL = process.env.NEXT_PUBLIC_VERCEL_URL; };
+import { BASE_URL } from '../lib/BASE_URL';
+// if (!process.env.NEXT_PUBLIC_HOST_URL) { process.env.NEXT_PUBLIC_HOST_URL = process.env.NEXT_PUBLIC_VERCEL_URL; };
 
 export async function getStaticProps() {
   const todaysEntry = await getDailyEntry();
@@ -32,7 +33,7 @@ export async function getStaticProps() {
 export default function Home({ todaysEntry, updateDate }) {
   const [hover, hoverSet] = useState(false);
 
-  console.log('client NEXT PBLIC URL check',process.env.NEXT_PUBLIC_HOST_URL)
+  console.log('baseurl test', BASE_URL)
   const entryText = JSON.parse(todaysEntry).text;
 
   return (
