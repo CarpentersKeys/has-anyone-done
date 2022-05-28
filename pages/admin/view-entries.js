@@ -11,8 +11,9 @@ export default function ViewEntries() {
     const [page, pageSet] = useState(0);
 
     useEffect(() => {
+        // ${BASE_URL}/
         // const urlBase = process.env.NEXT_PUBLIC_HOST_URL;
-        const fetchUrl = `${BASE_URL}/api/view`
+        const fetchUrl = `api/view`
         const reqOptions = {
             method: 'GET',
             headers: {
