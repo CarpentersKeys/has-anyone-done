@@ -15,7 +15,7 @@ export default function SubmitEntry() {
         evt.preventDefault();
         // ${BASE_URL}/
         // const urlBase = process.env.NEXT_PUBLIC_HOST_URL;
-        const fetchUrl = `api/entry`
+        const fetchUrl = `../api/entry`
         console.log('fetchurl', fetchUrl)
         const reqOptions = {
             method: 'POST',

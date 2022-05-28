@@ -13,7 +13,7 @@ export default function ViewEntries() {
     useEffect(() => {
         // ${BASE_URL}/
         // const urlBase = process.env.NEXT_PUBLIC_HOST_URL;
-        const fetchUrl = `api/view`
+        const fetchUrl = `../api/entry`
         const reqOptions = {
             method: 'GET',
             headers: {
