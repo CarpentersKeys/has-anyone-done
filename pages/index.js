@@ -33,7 +33,6 @@ export async function getStaticProps() {
 export default function Home({ todaysEntry, updateDate }) {
   const [hover, hoverSet] = useState(false);
 
-  console.log('baseurl test', BASE_URL)
   const entryText = JSON.parse(todaysEntry).text;
 
   return (

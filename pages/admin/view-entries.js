@@ -10,7 +10,7 @@ export default function ViewEntries() {
     const [page, pageSet] = useState(0);
 
     useEffect(() => {
-        const fetchUrl = `../api/entry`
+        const fetchUrl = `../api/view`
         const reqOptions = {
             method: 'GET',
             headers: {
