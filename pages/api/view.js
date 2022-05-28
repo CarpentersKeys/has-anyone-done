@@ -13,4 +13,3 @@ export default async function handler(req, resp) {
         return resp.status(400).json({ success: false, error })
     }
 }
-// .sort('-updatedAt')
