@@ -4,7 +4,6 @@ import styles from '../../styles/Submit-Entry.module.css';
 import TimedMessage from "../../Components/TimedMessage";
 import SignInOrOut from "../../Components/SignInOrOut";
 import { useRouter } from "next/router";
-import { BASE_URL } from "../../lib/BASE_URL";
 
 export default function SubmitEntry() {
     const [entryText, entryTextSet] = useState('');
@@ -13,8 +12,7 @@ export default function SubmitEntry() {
 
     async function handleSubmit(evt) {
         evt.preventDefault();
-        // ${BASE_URL}/
-        // const urlBase = process.env.NEXT_PUBLIC_HOST_URL;
+
         const fetchUrl = `../api/entry`
         console.log('fetchurl', fetchUrl)
         const reqOptions = {

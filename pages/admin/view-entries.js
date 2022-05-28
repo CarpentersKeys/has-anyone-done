@@ -3,7 +3,6 @@ import { useSession } from "next-auth/react";
 import styles from '../../styles/ViewEntries.module.css';
 import { useState, useEffect } from "react";
 import ListPageButtons from "../../Components/ListPageButtons";
-import { BASE_URL } from "../../lib/BASE_URL";
 
 export default function ViewEntries() {
     const { data: session } = useSession();
@@ -11,8 +10,6 @@ export default function ViewEntries() {
     const [page, pageSet] = useState(0);
 
     useEffect(() => {
-        // ${BASE_URL}/
-        // const urlBase = process.env.NEXT_PUBLIC_HOST_URL;
         const fetchUrl = `../api/entry`
         const reqOptions = {
             method: 'GET',
