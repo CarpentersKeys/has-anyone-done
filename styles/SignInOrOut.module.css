@@ -11,3 +11,16 @@
     border-radius: 1rem;
     font-size: 2rem;
 }
+
+.auth button {
+    background-color: var(--tertCol-light);
+}
+.auth button:hover {
+    background-color: var(--mainCol-light);
+}
+
+.auth {
+    padding: 1rem;
+    border-radius: 3rem;
+    background-color: var(--tertCol-light);
+}

@@ -1,0 +1,9 @@
+.container {
+    display: grid;
+    width: 100vw;
+    padding: 3rem;
+    font-size: 3rem;
+    place-content: center;
+    height: 100vh;
+    text-align: center;
+}
