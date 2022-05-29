@@ -14,12 +14,6 @@
     background-color: var(--tertCol-light);
 }
 
-.container button {
-    background-color: var(--tertCol-light);
-}
-.container button:hover {
-    background-color: var(--mainCol-light);
-}
 
 .form,
 .message {
