@@ -5,8 +5,6 @@ import { Temporal } from '@js-temporal/polyfill';
 import { useState } from 'react';
 import TimeUntil from '../Components/TimeUntil';
 import getDailyEntry from '../lib/getDailyEntry';
-import { BASE_URL } from '../lib/BASE_URL';
-// if (!process.env.NEXT_PUBLIC_HOST_URL) { process.env.NEXT_PUBLIC_HOST_URL = process.env.NEXT_PUBLIC_VERCEL_URL; };
 
 export async function getStaticProps() {
   const todaysEntry = await getDailyEntry();
@@ -18,8 +16,15 @@ export async function getStaticProps() {
     })
   const updateDate = dateMadeCurrent.add({ days: 1, minutes: 1 }) // 1 min buffer to make sure we've ticked over 
 
-  // run on the server so temporal should use the right timezone FUTURE: make this zoning explicit
-  const secondsFromNow = Math.max(Math.ceil(Temporal.Now.zonedDateTimeISO().until(updateDate).total('seconds')), 1);
+  // run on the server so temporal should use the right timezone 
+  // FUTURE: make this zoning explicit
+  const secondsFromNow =
+    Math.max(
+      Math.ceil(
+        Temporal.Now.zonedDateTimeISO('America/Toronto')
+          .until(updateDate).total('seconds')
+      ), 1
+    );
 
   return {
     props: {
