@@ -7,7 +7,7 @@ export default async function handler(req, resp) {
     if (method !== 'GET') { return; };
 
     try {
-        const entries = await EntryModel.find({});
+        const entries = await EntryModel.find({}).sort('-createdAt');
         return resp.status(200).json({ success: true, entries })
     } catch (error) {
         return resp.status(400).json({ success: false, error })
