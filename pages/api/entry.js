@@ -18,9 +18,22 @@ export default async function handler(req, resp) {
             isNovel: true,
             isCurrent: false,
         })
-        // just resp.json
-        return resp.send(JSON.stringify('successfully created new entry: ', newEntry));
+        return resp.json({
+            message: 'successfully created new entry: ',
+            newEntry,
+        });
     } catch (error) {
-        return resp.status(400).json({ success: false })
+        if (error.keyPattern.text === 1) {
+            return resp.status(400).json({
+                success: false,
+                message: 'duplicate submission',
+            });
+        };
+        console.log(error);
+        return resp.status(400).json({
+            success: false,
+            messaage: 'unhandled error, check server logs',
+            error,
+        })
     }
 }
