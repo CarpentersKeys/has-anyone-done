@@ -23,11 +23,10 @@ export async function getStaticProps() {
       Temporal.Now.zonedDateTimeISO('America/Toronto')
         .until(updateDate).total('seconds'));
 
-
   if (secondsFromNow < 0) {
     updateDate = null;
     unstable_revalidate();
-  } else updateDate = updateDate.toString
+  } else updateDate = updateDate.toString()
 
   return {
     props: {
@@ -56,7 +55,7 @@ export default function Home({ todaysEntry, updateDate }) {
           onMouseLeave={() => hoverSet(false)}
           className={styles.mainBg}
         >
-          <div>
+          <div className={styles.entryContainer}>
             <h1 className={styles.title}>
               has Anyone Done
             </h1>
