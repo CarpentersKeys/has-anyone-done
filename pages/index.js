@@ -14,24 +14,27 @@ export async function getStaticProps() {
       roundingMode: 'floor',
       smallestUnit: 'day',
     })
-  const updateDate = dateMadeCurrent.add({ days: 1, minutes: 1 }) // 1 min buffer to make sure we've ticked over 
+  let updateDate = dateMadeCurrent.add({ days: 1, minutes: 1 }) // 1 min buffer to make sure we've ticked over 
 
   // run on the server so temporal should use the right timezone 
   // FUTURE: make this zoning explicit
   const secondsFromNow =
-    Math.max(
-      Math.ceil(
-        Temporal.Now.zonedDateTimeISO('America/Toronto')
-          .until(updateDate).total('seconds')
-      ), 1
-    );
+    Math.ceil(
+      Temporal.Now.zonedDateTimeISO('America/Toronto')
+        .until(updateDate).total('seconds'));
+
+
+  if (secondsFromNow < 0) {
+    updateDate = null;
+    unstable_revalidate();
+  } else updateDate = updateDate.toString
 
   return {
     props: {
       todaysEntry: JSON.stringify(todaysEntry),
-      updateDate: updateDate.toString(),
+      updateDate,
     },
-    revalidate: secondsFromNow,
+    revalidate: updateDate && secondsFromNow,
   }
 }
 

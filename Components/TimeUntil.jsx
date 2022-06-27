@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Temporal, Intl } from "@js-temporal/polyfill";
+import { Temporal } from "@js-temporal/polyfill";
 import { useRouter } from "next/router";
 import styles from '../styles/TimeUntil.module.css';
 import formatDigits from "../lib/formatDigits";
@@ -32,22 +32,26 @@ export default function TimeUntil({ dateTime }) {
 
     // format time for display since Intl isn't supported yet
     useEffect(() => {
-
         const balancedTime = Temporal.Duration.from({ seconds: time, })
             .round({ largestUnit: 'hour', smallestUnit: 'second' })
-        const formattedSeconds = formatDigits({value: balancedTime.seconds, numberOfDigits: 2, emptyCharacter:'0'}) 
-        const formattedMinutes = formatDigits({value: balancedTime.minutes, numberOfDigits: 2, emptyCharacter:'0'}) 
-        const formattedHours= formatDigits({value: balancedTime.hours, numberOfDigits: 2, emptyCharacter:'0'}) 
-        
+        const formattedSeconds = formatDigits({ value: balancedTime.seconds, numberOfDigits: 2, emptyCharacter: '0' })
+        const formattedMinutes = formatDigits({ value: balancedTime.minutes, numberOfDigits: 2, emptyCharacter: '0' })
+        const formattedHours = formatDigits({ value: balancedTime.hours, numberOfDigits: 2, emptyCharacter: '0' })
+
         displayTimeSet(`${formattedHours}:${formattedMinutes}:${formattedSeconds}`);
     }, [time])
 
     return (
         <>
             {
-                time && <span id={styles.time}>
-                    time &apos;till next: {displayTime}
-                </span>
+                dateTime
+                    ? time && <span id={styles.time}>
+                        time &apos;till next: {displayTime}
+                    </span>
+                    : <span id={styles.time}>
+                        i&apos;m thinking...
+                    </span>
+
             }
         </>
     )
