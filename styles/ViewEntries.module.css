@@ -36,12 +36,27 @@
     display: flex;
 }
 
+.message {
+    font-size: 2rem;
+}
+
+
 .listCont p {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     margin: 0 0 20px 0;
     background-color: var(--quadCol-light);
     color: var(--mainCol-dark);
     padding: .4rem;
     border-radius: 1rem;
+}
+
+/* TODO figure out how to make this onload animation work */
+.recentEntry p {
+    background-color: var(--mainCol-light);
+    transition: background-color 3s ease-in;
+}
+
+.recentEntry p:first-child {
+    background-color: var(--quadCol-light);
 }
