@@ -6,7 +6,7 @@ A small app that displays a small idea once a day. It uses a simple admin sectio
 [View Demo](https://github.com/CarpentersKeys/greed-game) · [Report Bug](https://github.com/CarpentersKeys/greed-game/issues)
 
 ## About The Project 
-![Image](public/greed1.png)
+![Image](public/hadsanyonedone.png)
 
 ([back to top](#top))
 
@@ -30,6 +30,7 @@ After midnight anytime a user makes a request to the site a new entry will be fe
 ([back to top](#top))
 ### Admin
 Next-Auth secures the admin section and verifies that only registered users are authenticated using middleware. Once authorized a user can access the full list of paginated entries and submit new ones.
+![Image](/public/hasanyone1.png)
 ### Backend
 Next provides a serverless function API in it's framework. These functions appear very similar to a nodejs express app. There is some initial startup time and they can go dormant so cold starts can occur.
 ### Database
