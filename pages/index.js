@@ -14,7 +14,7 @@ export async function getStaticProps() {
       roundingMode: 'floor',
       smallestUnit: 'day',
     })
-  let updateDate = dateMadeCurrent.add({ days: 1, minutes: 1 }) // 1 min buffer to make sure we've ticked over 
+  let updateDate = dateMadeCurrent.add({ days: 0, minutes: 1 }) // 1 min buffer to make sure we've ticked over 
 
   // run on the server so temporal should use the right timezone 
   // FUTURE: make this zoning explicit
